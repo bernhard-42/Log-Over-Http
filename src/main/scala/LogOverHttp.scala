@@ -33,12 +33,7 @@ class LogOverHttp(taskId: String) {
         val runtime = java.lang.management.ManagementFactory.getRuntimeMXBean().getName()
         val host = runtime.split("@")(1)
         val pid  = runtime.split("@")(0)
-        // val tid = 
-        //     try { 
-        //         org.apache.spark.TaskContext.get().taskAttemptId() 
-        //     } catch { 
-        //         case e: Exception => -1 
-        //     }
+        // TODO: use genson
         val json = s"""{"type":"${typ}", "host":"${host}", "pid":${pid}, "tid":"${taskId}", "message":"${message.replaceAll("\"", "'")}"}"""
 
         post.setHeader("Content-type", "application/json")
