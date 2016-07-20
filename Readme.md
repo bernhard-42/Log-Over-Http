@@ -63,4 +63,4 @@ leads to
 	DEBUG: beebox02[ 15273 ](   P:3 S:0 ): 0.7547640283436756/0.5854021649234818 ==> 1
 	 INFO: beebox02[ 15048 ](    master ): Pi is roughly 3.2
 
-In number in `[]` is the process id (pid) and in `()` the value for `P:` is the partition id and for `S:` the stage id of the executor task 
+The number in `[]` is the process id (pid) and in `()` the value for `P:` is the partition id and for `S:` the stage id of the executor task 
