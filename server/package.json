@@ -1,0 +1,17 @@
+{
+  "name": "debugoverhttp",
+  "version": "1.0.0",
+  "description": "receive strings via post and dumps them to stdout",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bernhard Walter",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "colors": "^1.1.2",
+    "express": "^4.14.0",
+    "printf": "^0.2.5"
+  }
+}
