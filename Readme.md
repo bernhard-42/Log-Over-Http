@@ -15,7 +15,7 @@ In your code
 
 	import com.betaocean.LogOverHttp.LogOverHttp
 
-then initilaize it twice:
+then initialize it twice:
 
 1) For master 
 
@@ -30,6 +30,11 @@ then initilaize it twice:
 	val taskContext = org.apache.spark.TaskContext.get
 	val logoverhttp2 = new LogOverHttp(s"P:${taskContext.partitionId} S:${taskContext.stageId}")
 
+Use
+
+	logoverhttp.info("Some intelligent message")
+	logoverhttp.error("Some intelligent message")
+	logoverhttp2.debug("Some intelligent distributed message")
 
 ## Start log server
 
@@ -42,9 +47,11 @@ then initilaize it twice:
 Logging from master:
 
 	 INFO: beebox02[  4199](    master): Some intelligent message
+	ERROR: beebox02[  4199](    master): Something went wrong ...
+
 Logging from executors
 
 	 INFO: beebox06[ 23387](   P:1;S:0): Some intelligent distributed message
-	 INFO: beebox03[  4388](   P:0;S:0): Some intelligent distributed message
+	DEBUG: beebox03[  4388](   P:0;S:0): Some intelligent distributed message
 
-`P:` is the partition id and `S:` the stage id of the executore task 
+`P:` is the partition id and `S:` the stage id of the executor task 
