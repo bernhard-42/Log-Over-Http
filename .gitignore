@@ -3,3 +3,6 @@ project/project/target
 project/target
 
 derby.log
+test/spark-pi/target
+test/spark-pi/project/target/
+test/spark-pi/project/project/target/
