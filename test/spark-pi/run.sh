@@ -1,7 +1,7 @@
 #!/bin/bash
 
-EXECUTOR_DEBUG=beebox01:9999:debug
-DRIVER_DEBUG=beebox01:9999:debug
+EXECUTOR_DEBUG=beebox02:9999:debug
+DRIVER_DEBUG=beebox02:9999:debug
 
 # spark-submit --master local[4] \
 spark-submit --master yarn --deploy-mode client \

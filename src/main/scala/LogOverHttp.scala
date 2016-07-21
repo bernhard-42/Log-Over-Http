@@ -6,7 +6,7 @@ import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.log4j.Logger
 
 class LogOverHttp(taskId: String) {
-    val logger = Logger.getLogger("LogOverHttp")
+    val logger = Logger.getLogger(taskId)
 
     val debugOption = System.getProperty("httpdebug")
     val (webhost, port, debugMode) = 
@@ -33,8 +33,9 @@ class LogOverHttp(taskId: String) {
         val runtime = java.lang.management.ManagementFactory.getRuntimeMXBean().getName()
         val host = runtime.split("@")(1)
         val pid  = runtime.split("@")(0)
-        // TODO: use genson
-        val json = s"""{"type":"${typ}", "host":"${host}", "pid":${pid}, "tid":"${taskId}", "message":"${message.replaceAll("\"", "'")}"}"""
+        
+        val json = s"""{"time":${System.currentTimeMillis}, "type":"${typ}", "host":"${host}",""" + 
+                   s""" "pid":${pid}, "tid":"${taskId}", "message":"${message.replaceAll("\"", "'")}"}"""
 
         post.setHeader("Content-type", "application/json")
         post.setEntity(new StringEntity(json))
