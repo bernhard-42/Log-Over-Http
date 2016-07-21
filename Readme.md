@@ -1,8 +1,8 @@
 ## Overview
 
-Running Spark in yarn mode means that log files with debug info is distributed across the nodes that yarn has decided to provide for the job's driver and executors. The project tries to provide a quick and holistic view on the application specific debugging info (especially for streaming) without digging into the details of log4j. 
+Running Spark in yarn mode means that log files with debug info are distributed across the nodes that yarn has decided to provide for the job's driver and executors. The project tries to provide a quick and holistic view on the application specific debugging info (especially for streaming) without digging into the details of log4j. 
 
-**Note:** This not meant as a replacement for log4j and in enterprise environments tweaking log4j and using the existing YARN and Spark tools is the way to go. However during development and testing it can be quite convenient and can be easily replaced again with log4j by changing the logger intializations.
+**Note:** This not meant as a replacement for log4j and in enterprise environments tweaking log4j and using the existing YARN and Spark tools is the way to go. However during development and testing it can be quite convenient and can be easily replaced again with log4j by changing the logger intialization calls.
 
 
 ## Using LogOverHttp
