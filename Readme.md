@@ -30,7 +30,7 @@ as a dependency
 
 1) Import it
 
-	import com.betaocean.LogOverHttp.LogOverHttp
+	import com.betaocean.LogOverHttp.Logger
 
 Since Spark differentiates between driver and executors two different loggers are recommended
 
@@ -39,7 +39,7 @@ a) For all code that runs on the master (ensure name of the logger ends with "ma
 ```scala
 object MyCoolSparkProject {
 
-	val logger = new LogOverHttp("MyCoolSparkProject|master")
+	val logger = Logger.getLogger("MyCoolSparkProject|master")
 	...
 }
 ```
@@ -48,7 +48,7 @@ b) For all code that runs on executors add Spark's stage id and partition id
 
 ```bash
 val taskContext = org.apache.spark.TaskContext.get
-val logger2 = new LogOverHttp(s"MyCoolSparkProject|S:${taskContext.stageId} P:${taskContext.partitionId}")
+val logger2 = Logger.getLogger(s"MyCoolSparkProject|S:${taskContext.stageId} P:${taskContext.partitionId}")
 ```
 
 2) Use
@@ -80,8 +80,8 @@ $ EXECUTOR_DEBUG=beebox02:9999:debug
 $ DRIVER_DEBUG=beebox02:9999:debug
 
 $ spark-submit --master yarn --deploy-mode client \
-		       --conf="spark.driver.extraJavaOptions=-Dhttpdebug=$DRIVER_DEBUG" \
-		       --conf="spark.executor.extraJavaOptions=-Dhttpdebug=$EXECUTOR_DEBUG" \
+		           --conf="spark.driver.extraJavaOptions=-Dhttpdebug=$DRIVER_DEBUG" \
+		           --conf="spark.executor.extraJavaOptions=-Dhttpdebug=$EXECUTOR_DEBUG" \
                --class SparkPi target/scala-2.10/MyCoolSparkProject-assembly-1.0.jar $@
 ```
 
@@ -105,15 +105,16 @@ import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 
-import com.betaocean.LogOverHttp.LogOverHttp
+import com.betaocean.LogOverHttp.Logger
+// import org.apache.log4j.Logger
 
 object SparkPi {
-  val logger = new LogOverHttp("SparkPi|master")
+  val logger = Logger.getLogger("SparkPi|master")
 
   // This routine runs on Spark Executors, so define own logger with Spark stage/partition info
   def sample(p: Int) = {
     val taskContext = org.apache.spark.TaskContext.get
-    val logger2 = new LogOverHttp(s"SparkPi|S:${taskContext.stageId} P:${taskContext.partitionId}")
+    val logger2 = Logger.getLogger(s"SparkPi|S:${taskContext.stageId} P:${taskContext.partitionId}")
 
     val x = Math.random()
     val y = Math.random()
@@ -125,6 +126,7 @@ object SparkPi {
   }
 
   def main(args: Array[String]) = {
+    
     val NUM_SAMPLES = args(0).toInt 
     logger.info(s"Using ${NUM_SAMPLES} samples")
 
@@ -132,14 +134,15 @@ object SparkPi {
     val sc = new SparkContext(conf)
 
     val count = sc.parallelize(1 to NUM_SAMPLES, 4).map{i => sample(i)}.reduce(_ + _)
+
     val piEstimate = 4.0 * count / NUM_SAMPLES
     
     logger.info(s"Pi is roughly ${piEstimate}")
+    
     if (scala.math.abs(scala.math.Pi - piEstimate )> 0.000000001)
       logger.error("Sorry, not excact enough!")
   }
 }
-
 ```
 
 Compile it

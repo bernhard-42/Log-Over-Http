@@ -3,10 +3,9 @@ package com.betaocean.LogOverHttp
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.DefaultHttpClient
-import org.apache.log4j.Logger
 
-class LogOverHttp(taskId: String) {
-    val logger = Logger.getLogger(taskId)
+class Logger(taskId: String) {
+    val logger = org.apache.log4j.Logger.getLogger(taskId)
 
     val debugOption = System.getProperty("httpdebug")
     val (webhost, port, debugMode) = 
@@ -68,5 +67,12 @@ class LogOverHttp(taskId: String) {
             send("DEBUG", message) 
         }
     }
+}
+
+object Logger {
+    
+    def apply(taskId:String) = new Logger(taskId)
+
+    def getLogger(taskId: String) = new Logger(taskId)
 }
 

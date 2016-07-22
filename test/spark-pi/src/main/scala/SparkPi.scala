@@ -2,16 +2,16 @@ import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 
-import com.betaocean.LogOverHttp.LogOverHttp
-
+import com.betaocean.LogOverHttp.Logger
+// import org.apache.log4j.Logger
 
 object SparkPi {
-  val logger = new LogOverHttp("SparkPi|master")
+  val logger = Logger.getLogger("SparkPi|master")
 
   // This routine runs on Spark Executors, so define own logger with Spark stage/partition info
   def sample(p: Int) = {
     val taskContext = org.apache.spark.TaskContext.get
-    val logger2 = new LogOverHttp(s"SparkPi|S:${taskContext.stageId} P:${taskContext.partitionId}")
+    val logger2 = Logger.getLogger(s"SparkPi|S:${taskContext.stageId} P:${taskContext.partitionId}")
 
     val x = Math.random()
     val y = Math.random()
