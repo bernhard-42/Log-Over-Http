@@ -173,3 +173,20 @@ After some time the log server will show the following output:
 
 
 The number in `[]` is the process id (pid). There is one driver, two executors and one stage with 4 RDD partitions.
+
+
+## Use with Pyspark
+
+Works in python code in both driver and executors
+
+```bash
+from log-over_http import HttpLogger
+
+l = HttpLogger("SampleProject", "http://<host>:9999/echo")
+l.setLevel("INFO") # or "ERROR" or "DEBUG"
+
+l.error("An error message")
+l.info("An info message")
+l.debug("A debug message")
+
+```

@@ -6,3 +6,4 @@ derby.log
 test/spark-pi/target
 test/spark-pi/project/target/
 test/spark-pi/project/project/target/
+server/node_modules/
